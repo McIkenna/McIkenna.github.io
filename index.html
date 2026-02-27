@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ncho - Traditional African Strategy Board Game. Play against AI with multiple difficulty levels.">
+    <meta name="description"
+        content="Ncho - Traditional African Strategy Board Game. Play against AI with multiple difficulty levels.">
     <title>Merike Games</title>
     <style>
         * {
@@ -91,6 +93,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -107,6 +110,8 @@
             border-radius: 20px;
             margin-bottom: 3rem;
             box-shadow: var(--hover-shadow);
+            align-items: center;
+            justify-content: center;
         }
 
         .hero h1 {
@@ -125,6 +130,21 @@
             font-size: 1.1rem;
             font-style: italic;
             opacity: 0.8;
+        }
+
+        .sub-hero {
+            text-align: center;
+            color: var(--text-light);
+            padding: 3rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: var(--hover-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
         }
 
         /* Developer Card */
@@ -420,7 +440,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -437,6 +458,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav>
@@ -466,7 +488,9 @@
                 <div class="developer-info">
                     <h2>Ikenna</h2>
                     <p class="role">Game Developer & Unity Engineer</p>
-                    <p>Passionate about creating engaging mobile games that blend traditional culture with modern technology. Specializing in Unity development and bringing classic board games to digital platforms.</p>
+                    <p>Passionate about creating engaging mobile games that blend traditional culture with modern
+                        technology. Specializing in Unity development and bringing classic board games to digital
+                        platforms.</p>
                     <div class="social-links">
                         <a href="https://github.com/mcikenna" target="_blank">GitHub</a>
                         <a href="https://linkedin.com/in/ikenna-ifekaonwu/" target="_blank">LinkedIn</a>
@@ -480,13 +504,16 @@
         <!-- About Ncho -->
         <div class="content-card">
             <h2>About Ncho Game</h2>
-            <p>Ncho is a traditional African strategy board game that has been played for centuries. This digital adaptation brings the classic gameplay to modern mobile devices while preserving the strategic depth and cultural significance of the original game.</p>
-            
+            <p>Ncho is a traditional African strategy board game that has been played for centuries. This digital
+                adaptation brings the classic gameplay to modern mobile devices while preserving the strategic depth and
+                cultural significance of the original game.</p>
+
             <h3>🎯 Key Features</h3>
             <div class="features-grid">
                 <div class="feature-item">
                     <h3>🤖 AI Opponent</h3>
-                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy, Medium, and Hard.</p>
+                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy, Medium, and Hard.
+                    </p>
                 </div>
                 <div class="feature-item">
                     <h3>📱 Cross-Platform</h3>
@@ -511,6 +538,98 @@
             </div>
         </div>
 
+        <!-- About Ayo2D game -->
+        <div class="content-card">
+            <h2>About Ayo2D Game</h2>
+            <p class="intro-text">
+                Ayo (also known as Ayoayo or Ayo-Ayo) is a traditional Yoruba strategy board game that has been played
+                for centuries across West Africa.
+                This digital 2D adaptation brings the classic mancala-style gameplay to modern devices while preserving
+                the strategic depth,
+                cultural significance, and engaging gameplay of the original. Experience the ancient wisdom of African
+                board gaming in a beautiful,
+                modern interface designed for both beginners and seasoned players.
+            </p>
+
+            <h3>🎯 Key Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3><span class="emoji">🤖</span>Smart AI Opponent</h3>
+                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy (random moves),
+                        Medium (tactical captures), and Hard (advanced strategic planning). Perfect for learning or
+                        testing your mastery!</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🎯</span>Round-Based Championship</h3>
+                    <p>Compete in best-of-5 rounds where each round winner is determined by stone captures. Win the
+                        majority of rounds to become the ultimate champion!</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">✋</span>Animated Hand Movement</h3>
+                    <p>Watch as animated hands move clockwise around the board, dropping stones into pots with smooth 2D
+                        animations that bring the game to life.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🎨</span>Beautiful 2D Graphics</h3>
+                    <p>Clean, modern 2D interface with smooth animations, visual stone tracking, and intuitive touch
+                        controls optimized for mobile gameplay.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">📊</span>Live Score Tracking</h3>
+                    <p>Real-time display of captured stones, round wins, and game progress. See detailed statistics
+                        including pots captured and remaining stones claimed.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🏆</span>Achievement System</h3>
+                    <p>Track your performance with a comprehensive scoring system that awards points for pot captures,
+                        round victories, and overall game wins.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">⚡</span>Dynamic Gameplay Rules</h3>
+                    <p>Experience authentic Ayo rules: empty pot turn-ending, continuous movement on occupied pots,
+                        strategic captures on 4-stone pots, and automatic endgame stone collection.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🎭</span>Player vs Computer</h3>
+                    <p>Face off against the computer AI in single-player mode. Take control of the blue stones while the
+                        AI commands the black stones in strategic battle.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">📱</span>Cross-Platform Ready</h3>
+                    <p>Built with Unity 2D for seamless deployment on Android and iOS devices with optimized touch
+                        controls and responsive design.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🎬</span>Round Transitions</h3>
+                    <p>Beautiful transition screens announce each new round and display results with player scores,
+                        creating an immersive tournament atmosphere.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🔄</span>Clockwise Distribution</h3>
+                    <p>Stones move clockwise around the board in authentic Ayo fashion, with visual feedback showing
+                        exactly where each stone lands.</p>
+                </div>
+
+                <div class="feature-item">
+                    <h3><span class="emoji">🎯</span>Strategic Capture System</h3>
+                    <p>Master the art of timing to land your final stone in a pot with exactly 3 stones, creating a
+                        4-stone capture that claims all stones for your side!</p>
+                </div>
+            </div>
+        </div>
+
+
+
         <!-- Quick Links -->
         <div class="content-card">
             <h2>Quick Links</h2>
@@ -525,17 +644,20 @@
 
     <!-- Documentation Page -->
     <div id="documentation" class="page">
-        <div class="hero">
-            <h1>📚 Game Documentation</h1>
-            <p class="subtitle">Everything you need to know about Ncho</p>
-        </div>
+
 
         <div class="content-card">
+            <div>
+                <h1>Ncho Game Documentation</h1>
+                <p class="subtitle">Everything you need to know about Ncho</p>
+            </div>
             <h2>How to Play</h2>
-            <p>Ncho is a two-player strategy game played on a board with 12 pots arranged in two rows. Each pot starts with 4 stones.</p>
+            <p>Ncho is a two-player strategy game played on a board with 12 pots arranged in two rows. Each pot starts
+                with 4 stones.</p>
 
             <h3>Objective</h3>
-            <p>The goal is to capture more stones than your opponent by strategically distributing and collecting stones across the board.</p>
+            <p>The goal is to capture more stones than your opponent by strategically distributing and collecting stones
+                across the board.</p>
 
             <h3>Game Rules</h3>
             <table>
@@ -552,15 +674,18 @@
                     </tr>
                     <tr>
                         <td><strong>Making a Move</strong></td>
-                        <td>Select a pot from your side (6 pots). All stones from that pot are distributed one by one into subsequent pots clockwise.</td>
+                        <td>Select a pot from your side (6 pots). All stones from that pot are distributed one by one
+                            into subsequent pots clockwise.</td>
                     </tr>
                     <tr>
                         <td><strong>Capturing Stones</strong></td>
-                        <td>If the last stone lands in a pot making it contain exactly 4 stones, you capture all 4 stones.</td>
+                        <td>If the last stone lands in a pot making it contain exactly 4 stones, you capture all 4
+                            stones.</td>
                     </tr>
                     <tr>
                         <td><strong>Continuing Play</strong></td>
-                        <td>If the last stone lands in a non-empty pot (not making 4), pick up all stones from that pot and continue distributing.</td>
+                        <td>If the last stone lands in a non-empty pot (not making 4), pick up all stones from that pot
+                            and continue distributing.</td>
                     </tr>
                     <tr>
                         <td><strong>Ending a Turn</strong></td>
@@ -568,11 +693,13 @@
                     </tr>
                     <tr>
                         <td><strong>End of Round</strong></td>
-                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes the remaining stones.</td>
+                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes
+                            the remaining stones.</td>
                     </tr>
                     <tr>
                         <td><strong>Winning</strong></td>
-                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the game!</td>
+                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the
+                            game!</td>
                     </tr>
                 </tbody>
             </table>
@@ -594,7 +721,7 @@
             </div>
 
             <h3>Game Features Explained</h3>
-            
+
             <h4>AI Difficulty Levels</h4>
             <ul style="margin-left: 2rem; margin-top: 0.5rem;">
                 <li><strong>Easy:</strong> AI makes random moves. Perfect for learning the game.</li>
@@ -603,7 +730,8 @@
             </ul>
 
             <h4>Save & Continue</h4>
-            <p>Your game is automatically saved when you pause or return to the main menu. Resume anytime from where you left off!</p>
+            <p>Your game is automatically saved when you pause or return to the main menu. Resume anytime from where you
+                left off!</p>
 
             <h4>Visual Feedback</h4>
             <ul style="margin-left: 2rem; margin-top: 0.5rem;">
@@ -612,64 +740,191 @@
                 <li><strong>Red Glow:</strong> Pot selected by the Keeper (AI opponent)</li>
                 <li><strong>Orange Flash:</strong> Stone dropped into a pot</li>
             </ul>
-        </div>
 
-        <div class="content-card">
-            <h2>Tips & Strategies</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>💡 Plan Ahead</h3>
-                    <p>Think about where your last stone will land before making a move.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🎯 Aim for Captures</h3>
-                    <p>Try to land your last stone in pots with 3 stones to capture 4.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🛡️ Defensive Play</h3>
-                    <p>Avoid leaving pots with 3 stones on your side that opponent can capture.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🔄 Chain Moves</h3>
-                    <p>Landing in non-empty pots lets you continue - use this strategically!</p>
+            <div style="padding: 20px;">
+                <h2>Tips & Strategies</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>💡 Plan Ahead</h3>
+                        <p>Think about where your last stone will land before making a move.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🎯 Aim for Captures</h3>
+                        <p>Try to land your last stone in pots with 3 stones to capture 4.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🛡️ Defensive Play</h3>
+                        <p>Avoid leaving pots with 3 stones on your side that opponent can capture.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔄 Chain Moves</h3>
+                        <p>Landing in non-empty pots lets you continue - use this strategically!</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="content-card">
+            <div class="game-info">
+                <div>
+                <h1>Ayo2D Game Documentation</h1>
+                <p class="subtitle">Everything you need to know about Ayo2D</p>
+            </div>
+                <h3>🎮 The Game of Strategy & Skill</h3>
+                <p>
+                    Ayo2D challenges players to think several moves ahead, capturing stones through clever distribution
+                    and strategic planning.
+                    Every decision matters as you compete to capture more stones than your opponent across multiple
+                    rounds in this best-of-five championship format.
+                </p>
+            </div>
+
+            
+
+            <div class="game-info" style="margin-top: 50px;">
+                <h3>Objective</h3>
+            <p>Win 3 out of 5 rounds by capturing more stones than your opponent each
+                    round.</p>
+
+            <h3>Game Rules</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Starting the Game</strong></td>
+                        <td>Each of the 12 pots contains 4 stones at the start. Player goes first.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Making a Move</strong></td>
+                        <td>Select any pot on your side (bottom 6 pots) that contains stones. The
+                    hand will pick up all stones and distribute them clockwise, one per pot.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capturing Stones</strong></td>
+                        <td>If your last stone lands in a pot that then has exactly 4 stones, you
+                    capture all 4!</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Continuing Play</strong></td>
+                        <td>If your last stone lands in a non-empty pot (not resulting in 4
+                    stones), pick up all stones from that pot and continue distributing.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ending a Turn</strong></td>
+                        <td>Your turn ends when your last stone lands in an empty pot.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End of Round</strong></td>
+                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes
+                            the remaining stones.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Winning</strong></td>
+                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the
+                            game!</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+
+
+        </div>
+
+
     </div>
 
     <!-- Screenshots Page -->
     <div id="screenshots" class="page">
-        <div class="hero">
-            <h1>📸 Game Screenshots</h1>
-            <p class="subtitle">See Ncho in action</p>
+        <div>
+            <div class="sub-hero">
+                <div style="padding: 20px;">
+                    <img src="images/ncho_logo.png" alt="nchoGame1" width="100px" />
+                </div>
+                <h1>Ncho Game Screenshots</h1>
+            </div>
+
+            <div class="screenshots-grid">
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder">
+                        <img src="images/ncho1.webp" alt="nchoGame1" width="500px" />
+                    </div>
+                    <div class="screenshot-caption">Game Features</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/ncho3.webp" alt="nchoGame3" width="500px" />
+                    </div>
+                    <div class="screenshot-caption">Game Board</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/nchoMobile.png" alt="nchoGame4"
+                            height="250px" /></div>
+                    <div class="screenshot-caption">Gameplay Action</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/gameOver.png" alt="gameOver" width="500px" />
+                    </div>
+                    <div class="screenshot-caption">Victory Screen</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/ayoSettings.png" alt="nchoGame2"
+                            width="500px" /></div>
+                    <div class="screenshot-caption">Settings Menu</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/main_menu.png" alt="mainMenu" width="500px" />
+                    </div>
+                    <div class="screenshot-caption">Main Menu</div>
+                </div>
+            </div>
         </div>
 
-        <div class="screenshots-grid">
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder">
-                    <img src="images/ncho1.webp" alt="nchoGame1" />
+        <div>
+            <div class="sub-hero">
+                <div style="padding: 20px;">
+                    <img src="images/AyoLogo512.png" alt="nchoGame1" width="100px" />
                 </div>
-                <div class="screenshot-caption">Main Menu</div>
+
+                <h1>Ayo2D Game Screenshots</h1>
             </div>
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder"><img src="images/ncho2.webp" alt="nchoGame1" /></div>
-                <div class="screenshot-caption">Game Board</div>
-            </div>
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder">⚡</div>
-                <div class="screenshot-caption">Gameplay Action</div>
-            </div>
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder">🏆</div>
-                <div class="screenshot-caption">Victory Screen</div>
-            </div>
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder">⚙️</div>
-                <div class="screenshot-caption">Settings Menu</div>
-            </div>
-            <div class="screenshot-item">
-                <div class="screenshot-placeholder">📊</div>
-                <div class="screenshot-caption">Score Display</div>
+
+            <div class="screenshots-grid">
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder">
+                        <img src="images/gameView2.png" alt="nchoGame1" width="500px" />
+                    </div>
+                    <div class="screenshot-caption">Main Menu</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/fetGraphNoLogo.png" alt="nchoGame3"
+                            width="500px" /></div>
+                    <div class="screenshot-caption">Game Board</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/Tablet10.2.png" alt="nchoGame4"
+                            height="250px" /></div>
+                    <div class="screenshot-caption">Gameplay Action</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/DrawBoard.png" alt="gameOver" height="250px" />
+                    </div>
+                    <div class="screenshot-caption">Victory Screen</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/ayoSettings.png" alt="nchoGame2"
+                            height="250px" /></div>
+                    <div class="screenshot-caption">Settings Menu</div>
+                </div>
+                <div class="screenshot-item">
+                    <div class="screenshot-placeholder"><img src="images/10inchSjort.png" alt="features"
+                            height="250px" /></div>
+                    <div class="screenshot-caption">Game Features</div>
+                </div>
             </div>
         </div>
 
@@ -682,32 +937,48 @@
                 <li>Responsive layouts for all screen sizes</li>
                 <li>Beautiful color schemes</li>
                 <li>Intuitive touch controls</li>
-            </ul>
-            <p style="margin-top: 1rem;"><em>Note: Replace placeholder images above with actual game screenshots by adding images to your repository and updating the HTML.</em></p>
         </div>
     </div>
 
     <!-- Download Page -->
     <div id="download" class="page">
-        <div class="hero">
-            <h1>⬇️ Download Ncho</h1>
-            <p class="subtitle">Available on Android & iOS</p>
-        </div>
 
         <div class="content-card download-section">
-            <h2>Get the Game</h2>
+            <div style="padding: 20px;">
+                    <img src="images/ncho_logo.png" alt="nchoGame1" width="100px" />
+                </div>
+            <h3>⬇️ Download Ncho</h3>
+            <p class="subtitle">Available on Android & iOS</p>
             <p>Download Ncho for free and start playing today!</p>
-            
+
             <div class="download-buttons">
-                <a href="#https://play.google.com/store/apps/details?id=com.UnityTechnologies.com.unity.merike.ncho" class="download-btn">
+                <a href="https://play.google.com/store/apps/details?id=com.UnityTechnologies.com.unity.merike.ncho"
+                    class="download-btn">
                     📱 Download for Android
                 </a>
                 <a href="#" class="download-btn">
-                    🍎 Download for iOS
+                    🍎 Download for iOS (Comming Soon)
                 </a>
             </div>
+        </div>
 
-            <p style="margin-top: 2rem; opacity: 0.7;">Coming soon to App Store and Google Play</p>
+        <div class="content-card download-section">
+            <div style="padding: 20px;">
+                    <img src="images/AyoLogo512.png" alt="nchoGame1" width="100px" />
+            </div>
+            <h3>⬇️ Download Ayo2D</h3>
+            <p class="subtitle">Available on Android & iOS</p>
+            <p>Download Ayo2D for free and start playing today!</p>
+
+            <div class="download-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.Merike.Ayo"
+                    class="download-btn">
+                    📱 Download for Android
+                </a>
+                <a href="#" class="download-btn">
+                    🍎 Download for iOS (Comming Soon)
+                </a>
+            </div>
         </div>
 
         <div class="content-card">
@@ -731,61 +1002,49 @@
                 </div>
             </div>
         </div>
-
-        <div class="content-card">
-            <h2>Privacy & Safety</h2>
-            <p>Your privacy matters to us. Ncho Game:</p>
-            <ul style="margin-left: 2rem; margin-top: 1rem;">
-                <li>✅ Does not collect personal information</li>
-                <li>✅ No ads or tracking</li>
-                <li>✅ Safe for all ages (5+)</li>
-                <li>✅ Offline gameplay (no internet required)</li>
-                <li>✅ COPPA and GDPR compliant</li>
-            </ul>
-            <p style="margin-top: 1rem;"><a href="#" style="color: var(--secondary-color);">Read our Privacy Policy →</a></p>
-        </div>
     </div>
 
     <!-- Other Games Page -->
     <div id="other-games" class="page">
         <div class="hero">
             <h1>🎮 More Games</h1>
-            <p class="subtitle">Explore our other projects</p>
+            <p class="subtitle">Explore our up coming projects</p>
         </div>
 
         <div class="games-grid">
             <div class="game-card">
-                <div class="game-card-image">🎲</div>
-                <div class="game-card-content">
-                    <h3>Ludo Master</h3>
-                    <p>Classic board game with online multiplayer support.</p>
-                    <span class="game-status">Coming Soon</span>
+                <div class="game-card-image"><img src="images/masqueR.png" alt="nchoGame3"
+                            width="400px" />
                 </div>
-            </div>
-
-            <div class="game-card">
-                <div class="game-card-image">♟️</div>
                 <div class="game-card-content">
-                    <h3>Chess Champion</h3>
-                    <p>Advanced chess game with AI opponents and puzzles.</p>
+                    <h3>Masque Raiders</h3>
+                    <p>An action advanture game to vanquish the invading forces from evil in the village.</p>
                     <span class="game-status">In Development</span>
                 </div>
             </div>
 
             <div class="game-card">
-                <div class="game-card-image">🃏</div>
+                <div class="game-card-image">✈️</div>
                 <div class="game-card-content">
-                    <h3>Card Master</h3>
-                    <p>Collection of classic card games in one app.</p>
+                    <h3>The Vanquisher</h3>
+                    <p>A space game to eliminate enemy forces within the galaxy</p>
                     <span class="game-status">Planning</span>
                 </div>
             </div>
-
-            <div class="game-card">
-                <div class="game-card-image">🎯</div>
+             <div class="game-card">
+                <div class="game-card-image">🚚</div>
                 <div class="game-card-content">
-                    <h3>Puzzle Challenge</h3>
-                    <p>Brain-teasing puzzles for all skill levels.</p>
+                    <h3>Gabage Truck</h3>
+                    <p>Clean and clear the streets from dirts</p>
+                    <span class="game-status">Planning</span>
+                </div>
+
+            </div>
+             <div class="game-card">
+                <div class="game-card-image">🧂 + 🗄️</div>
+                <div class="game-card-content">
+                    <h3>Spice Cabinet</h3>
+                    <p>Brain teasing puzzle to find the right spice within a Cabinet </p>
                     <span class="game-status">Planning</span>
                 </div>
             </div>
@@ -805,11 +1064,11 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Ncho Game. All rights reserved.</p>
-        <p>Developed with ❤️ by <a href="#home" onclick="showPage('home')">Your Name</a></p>
+        <p>&copy; 2026 Merike Games. All rights reserved.</p>
+        <p>Developed by <a href="#home" onclick="showPage('home')">MERIKE LLC</a></p>
         <p>
-            <a href="#">Privacy Policy</a> | 
-            <a href="#">Terms of Service</a> | 
+            <a href="ncho-privacy">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
             <a href="mailto:meriktech@gmail.com">Contact</a>
         </p>
     </footer>
@@ -821,18 +1080,18 @@
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
+
             // Show selected page
             document.getElementById(pageId).classList.add('active');
-            
+
             // Update nav links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
             event.target.classList.add('active');
-            
+
             // Scroll to top
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Handle hash navigation
@@ -852,4 +1111,5 @@
         });
     </script>
 </body>
+
 </html>
