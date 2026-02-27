@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ncho - Traditional African Strategy Board Game. Play against AI with multiple difficulty levels.">
+    <title>Ncho Game - Traditional African Strategy Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --light-bg: #ecf0f1;
+            --dark-bg: #34495e;
+            --text-light: #ffffff;
+            --text-dark: #2c3e50;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 100px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            color: var(--text-light);
+            padding: 3rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: var(--hover-shadow);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* Developer Card */
+        .developer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .developer-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: var(--card-shadow);
+        }
+
+        .developer-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .developer-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-info .role {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            padding: 0.5rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* Content Card */
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .content-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .content-card h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Game Screenshots */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .screenshot-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .screenshot-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .screenshot-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Features List */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+        }
+
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Download Buttons */
+        .download-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            box-shadow: var(--card-shadow);
+        }
+
+        .download-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        /* Other Games Section */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .game-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .game-card-content {
+            padding: 1.5rem;
+        }
+
+        .game-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .game-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(44, 62, 80, 0.95);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            nav li {
+                margin: 0.5rem 1rem;
+            }
+
+            .developer-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Rules Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-link active" onclick="showPage('home')">Home</a></li>
+            <li><a href="#documentation" class="nav-link" onclick="showPage('documentation')">Documentation</a></li>
+            <li><a href="#screenshots" class="nav-link" onclick="showPage('screenshots')">Screenshots</a></li>
+            <li><a href="#download" class="nav-link" onclick="showPage('download')">Download</a></li>
+            <li><a href="#other-games" class="nav-link" onclick="showPage('other-games')">Other Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>🎮 Ncho Game</h1>
+            <p class="subtitle">Traditional African Strategy Board Game</p>
+            <p class="tagline">Challenge your mind with this ancient game of strategy</p>
+        </div>
+
+        <!-- Developer Section -->
+        <div class="content-card">
+            <h2>Meet the Developer</h2>
+            <div class="developer-card">
+                <div class="developer-avatar">👨‍💻</div>
+                <div class="developer-info">
+                    <h2>Your Name</h2>
+                    <p class="role">Game Developer & Unity Engineer</p>
+                    <p>Passionate about creating engaging mobile games that blend traditional culture with modern technology. Specializing in Unity development and bringing classic board games to digital platforms.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+                        <a href="mailto:your.email@example.com">Email</a>
+                        <a href="https://twitter.com/yourusername" target="_blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Ncho -->
+        <div class="content-card">
+            <h2>About Ncho Game</h2>
+            <p>Ncho is a traditional African strategy board game that has been played for centuries. This digital adaptation brings the classic gameplay to modern mobile devices while preserving the strategic depth and cultural significance of the original game.</p>
+            
+            <h3>🎯 Key Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>🤖 AI Opponent</h3>
+                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy, Medium, and Hard.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>📱 Cross-Platform</h3>
+                    <p>Play on Android and iOS devices with optimized touch controls.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>💾 Save System</h3>
+                    <p>Pause and return to your game anytime. Your progress is automatically saved.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎨 Beautiful UI</h3>
+                    <p>Clean, modern interface with smooth animations and visual feedback.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔊 Sound Effects</h3>
+                    <p>Immersive audio experience with background music and sound effects.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🏆 Score Tracking</h3>
+                    <p>Track your wins, losses, and progress over time.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="content-card">
+            <h2>Quick Links</h2>
+            <div class="social-links">
+                <a href="#documentation" onclick="showPage('documentation')">View Documentation</a>
+                <a href="#screenshots" onclick="showPage('screenshots')">See Screenshots</a>
+                <a href="#download" onclick="showPage('download')">Download Game</a>
+                <a href="#other-games" onclick="showPage('other-games')">More Games</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documentation Page -->
+    <div id="documentation" class="page">
+        <div class="hero">
+            <h1>📚 Game Documentation</h1>
+            <p class="subtitle">Everything you need to know about Ncho</p>
+        </div>
+
+        <div class="content-card">
+            <h2>How to Play</h2>
+            <p>Ncho is a two-player strategy game played on a board with 12 pots arranged in two rows. Each pot starts with 4 stones.</p>
+
+            <h3>Objective</h3>
+            <p>The goal is to capture more stones than your opponent by strategically distributing and collecting stones across the board.</p>
+
+            <h3>Game Rules</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Starting the Game</strong></td>
+                        <td>Each of the 12 pots contains 4 stones at the start. Player goes first.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Making a Move</strong></td>
+                        <td>Select a pot from your side (6 pots). All stones from that pot are distributed one by one into subsequent pots clockwise.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Capturing Stones</strong></td>
+                        <td>If the last stone lands in a pot making it contain exactly 4 stones, you capture all 4 stones.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Continuing Play</strong></td>
+                        <td>If the last stone lands in a non-empty pot (not making 4), pick up all stones from that pot and continue distributing.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ending a Turn</strong></td>
+                        <td>Your turn ends when the last stone lands in an empty pot.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End of Round</strong></td>
+                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes the remaining stones.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Winning</strong></td>
+                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the game!</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Controls</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Touch/Click</h3>
+                    <p>Tap on any pot with stones on your side to select it and distribute the stones.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Pause</h3>
+                    <p>Tap the pause button or press the back button to pause the game.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Settings</h3>
+                    <p>Access game settings to adjust difficulty, sound, and other options.</p>
+                </div>
+            </div>
+
+            <h3>Game Features Explained</h3>
+            
+            <h4>AI Difficulty Levels</h4>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li><strong>Easy:</strong> AI makes random moves. Perfect for learning the game.</li>
+                <li><strong>Medium:</strong> AI tries to capture stones when possible. Good for practice.</li>
+                <li><strong>Hard:</strong> AI uses strategic planning and looks ahead. Real challenge!</li>
+            </ul>
+
+            <h4>Save & Continue</h4>
+            <p>Your game is automatically saved when you pause or return to the main menu. Resume anytime from where you left off!</p>
+
+            <h4>Visual Feedback</h4>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li><strong>Yellow Highlight:</strong> Pot you're hovering over (can be selected)</li>
+                <li><strong>Green Highlight:</strong> Pot you've selected</li>
+                <li><strong>Red Glow:</strong> Pot selected by the Keeper (AI opponent)</li>
+                <li><strong>Orange Flash:</strong> Stone dropped into a pot</li>
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>Tips & Strategies</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>💡 Plan Ahead</h3>
+                    <p>Think about where your last stone will land before making a move.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎯 Aim for Captures</h3>
+                    <p>Try to land your last stone in pots with 3 stones to capture 4.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🛡️ Defensive Play</h3>
+                    <p>Avoid leaving pots with 3 stones on your side that opponent can capture.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔄 Chain Moves</h3>
+                    <p>Landing in non-empty pots lets you continue - use this strategically!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screenshots Page -->
+    <div id="screenshots" class="page">
+        <div class="hero">
+            <h1>📸 Game Screenshots</h1>
+            <p class="subtitle">See Ncho in action</p>
+        </div>
+
+        <div class="screenshots-grid">
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">🎮</div>
+                <div class="screenshot-caption">Main Menu</div>
+            </div>
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">🎲</div>
+                <div class="screenshot-caption">Game Board</div>
+            </div>
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">⚡</div>
+                <div class="screenshot-caption">Gameplay Action</div>
+            </div>
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">🏆</div>
+                <div class="screenshot-caption">Victory Screen</div>
+            </div>
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">⚙️</div>
+                <div class="screenshot-caption">Settings Menu</div>
+            </div>
+            <div class="screenshot-item">
+                <div class="screenshot-placeholder">📊</div>
+                <div class="screenshot-caption">Score Display</div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>🎨 Visual Features</h2>
+            <ul style="margin-left: 2rem;">
+                <li>Clean, modern UI design</li>
+                <li>Smooth animations and transitions</li>
+                <li>Visual feedback for all actions</li>
+                <li>Responsive layouts for all screen sizes</li>
+                <li>Beautiful color schemes</li>
+                <li>Intuitive touch controls</li>
+            </ul>
+            <p style="margin-top: 1rem;"><em>Note: Replace placeholder images above with actual game screenshots by adding images to your repository and updating the HTML.</em></p>
+        </div>
+    </div>
+
+    <!-- Download Page -->
+    <div id="download" class="page">
+        <div class="hero">
+            <h1>⬇️ Download Ncho</h1>
+            <p class="subtitle">Available on Android & iOS</p>
+        </div>
+
+        <div class="content-card download-section">
+            <h2>Get the Game</h2>
+            <p>Download Ncho for free and start playing today!</p>
+            
+            <div class="download-buttons">
+                <a href="#" class="download-btn">
+                    📱 Download for Android
+                </a>
+                <a href="#" class="download-btn">
+                    🍎 Download for iOS
+                </a>
+            </div>
+
+            <p style="margin-top: 2rem; opacity: 0.7;">Coming soon to App Store and Google Play</p>
+        </div>
+
+        <div class="content-card">
+            <h2>System Requirements</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Android</h3>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Android 6.0 or higher</li>
+                        <li>1GB RAM minimum</li>
+                        <li>100MB free storage</li>
+                    </ul>
+                </div>
+                <div class="feature-item">
+                    <h3>iOS</h3>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>iOS 12.0 or higher</li>
+                        <li>iPhone 6 or newer</li>
+                        <li>100MB free storage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>Privacy & Safety</h2>
+            <p>Your privacy matters to us. Ncho Game:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>✅ Does not collect personal information</li>
+                <li>✅ No ads or tracking</li>
+                <li>✅ Safe for all ages (5+)</li>
+                <li>✅ Offline gameplay (no internet required)</li>
+                <li>✅ COPPA and GDPR compliant</li>
+            </ul>
+            <p style="margin-top: 1rem;"><a href="#" style="color: var(--secondary-color);">Read our Privacy Policy →</a></p>
+        </div>
+    </div>
+
+    <!-- Other Games Page -->
+    <div id="other-games" class="page">
+        <div class="hero">
+            <h1>🎮 More Games</h1>
+            <p class="subtitle">Explore our other projects</p>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-card-image">🎲</div>
+                <div class="game-card-content">
+                    <h3>Ludo Master</h3>
+                    <p>Classic board game with online multiplayer support.</p>
+                    <span class="game-status">Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-card-image">♟️</div>
+                <div class="game-card-content">
+                    <h3>Chess Champion</h3>
+                    <p>Advanced chess game with AI opponents and puzzles.</p>
+                    <span class="game-status">In Development</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-card-image">🃏</div>
+                <div class="game-card-content">
+                    <h3>Card Master</h3>
+                    <p>Collection of classic card games in one app.</p>
+                    <span class="game-status">Planning</span>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-card-image">🎯</div>
+                <div class="game-card-content">
+                    <h3>Puzzle Challenge</h3>
+                    <p>Brain-teasing puzzles for all skill levels.</p>
+                    <span class="game-status">Planning</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>Stay Updated</h2>
+            <p>Follow us on social media to get updates on new games and features:</p>
+            <div class="social-links" style="justify-content: center; margin-top: 1rem;">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://twitter.com/yourusername" target="_blank">Twitter</a>
+                <a href="https://instagram.com/yourusername" target="_blank">Instagram</a>
+                <a href="https://youtube.com/@yourusername" target="_blank">YouTube</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Ncho Game. All rights reserved.</p>
+        <p>Developed with ❤️ by <a href="#home" onclick="showPage('home')">Your Name</a></p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Service</a> | 
+            <a href="mailto:your.email@example.com">Contact</a>
+        </p>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Handle hash navigation
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.slice(1);
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // Update hash when navigating
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const pageId = e.target.getAttribute('href').slice(1);
+                window.location.hash = pageId;
+            });
+        });
+    </script>
+</body>
+</html>
