@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Masque-Raiders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0e0c0a;
+    --parchment: #f5f0e8;
+    --gold:      #b8922a;
+    --gold-light:#d4aa4a;
+    --ember:     #8b2e12;
+    --ash:       #4a4540;
+    --mist:      #7a7268;
+    --rule:      rgba(184,146,42,0.25);
+    --serif:     'Crimson Pro', Georgia, serif;
+    --display:   'Cinzel', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--ink);
+    color: var(--parchment);
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.85;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ── Background texture ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,46,18,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 110%, rgba(184,146,42,0.08) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── Layout ── */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  /* ── Header ── */
+  .masthead {
+    text-align: center;
+    margin-bottom: 72px;
+    animation: fadeDown 0.9s ease both;
+  }
+
+  .game-name {
+    font-family: var(--display);
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .game-name span {
+    display: block;
+    font-size: 0.28em;
+    letter-spacing: 0.5em;
+    color: var(--mist);
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .doc-title {
+    font-family: var(--display);
+    font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+    letter-spacing: 0.35em;
+    color: var(--mist);
+    text-transform: uppercase;
+    margin-top: 18px;
+  }
+
+  /* Ornamental divider */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px auto;
+    width: fit-content;
+  }
+  .ornament-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .ornament-line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .ornament-diamond {
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .effective-date {
+    font-size: 0.78rem;
+    color: var(--mist);
+    letter-spacing: 0.1em;
+    font-style: italic;
+    text-align: center;
+    margin-top: -12px;
+    margin-bottom: 60px;
+    animation: fadeDown 0.9s 0.15s ease both;
+  }
+
+  /* ── Sections ── */
+  .section {
+    margin-bottom: 52px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .section:nth-child(2)  { animation-delay: 0.1s; }
+  .section:nth-child(3)  { animation-delay: 0.15s; }
+  .section:nth-child(4)  { animation-delay: 0.2s; }
+  .section:nth-child(5)  { animation-delay: 0.25s; }
+  .section:nth-child(6)  { animation-delay: 0.3s; }
+  .section:nth-child(7)  { animation-delay: 0.35s; }
+  .section:nth-child(8)  { animation-delay: 0.4s; }
+  .section:nth-child(9)  { animation-delay: 0.45s; }
+  .section:nth-child(10) { animation-delay: 0.5s; }
+  .section:nth-child(11) { animation-delay: 0.55s; }
+
+  .section-number {
+    font-family: var(--display);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--ember);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.3;
+  }
+
+  p { margin-bottom: 16px; color: rgba(245,240,232,0.88); }
+  p:last-child { margin-bottom: 0; }
+
+  strong {
+    color: var(--parchment);
+    font-weight: 600;
+  }
+
+  em { color: var(--gold-light); font-style: italic; }
+
+  /* ── Age restriction callout ── */
+  .age-callout {
+    border: 1px solid rgba(139,46,18,0.5);
+    border-left: 3px solid var(--ember);
+    background: rgba(139,46,18,0.08);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .age-callout p {
+    color: rgba(245,240,232,0.9);
+    margin-bottom: 0;
+  }
+
+  .age-callout strong {
+    color: #e8926a;
+  }
+
+  /* ── Info list ── */
+  ul {
+    list-style: none;
+    margin: 12px 0 16px;
+    padding: 0;
+  }
+
+  ul li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+    color: rgba(245,240,232,0.85);
+  }
+
+  ul li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    font-size: 0.45em;
+    top: 7px;
+    color: var(--gold);
+  }
+
+  /* ── Contact block ── */
+  .contact-block {
+    background: rgba(184,146,42,0.06);
+    border: 1px solid var(--rule);
+    padding: 28px 32px;
+    margin-top: 24px;
+    border-radius: 2px;
+    text-align: center;
+  }
+
+  .contact-block p {
+    margin-bottom: 6px;
+  }
+
+  .contact-block a {
+    color: var(--gold-light);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid rgba(212,170,74,0.3);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .contact-block a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 80px;
+    text-align: center;
+    animation: fadeUp 0.7s 0.6s ease both;
+  }
+
+  .footer-text {
+    font-size: 0.78rem;
+    color: var(--mist);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .page { padding: 52px 24px 80px; }
+    .ornament-line { width: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Masthead ── -->
+  <header class="masthead">
+    <div class="game-name">
+      <span>The Chronicles of</span>
+      Masque-Raiders
+    </div>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-diamond" style="width:5px;height:5px;opacity:0.5"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+    <div class="doc-title">Privacy Policy</div>
+  </header>
+
+  <p class="effective-date">Effective Date: April 2, 2026 &nbsp;·&nbsp; Last Updated: April 2, 2026</p>
+
+  <!-- ── 1. Introduction ── -->
+  <div class="section">
+    <div class="section-number">Article I</div>
+    <h2>Introduction</h2>
+    <p>Welcome to <em>Masque-Raiders</em>, an action combat game in which you battle through haunted forests and burning villages to liberate the people from an enemy siege. This Privacy Policy explains how we collect, use, store, and protect information when you play our game on mobile devices (Android and iOS).</p>
+    <p>By downloading or playing Masque-Raiders, you agree to the practices described in this policy. If you do not agree, please do not install or use the game.</p>
+    <p>We are committed to being transparent about our data practices and to protecting the privacy of everyone who plays, particularly younger players.</p>
+  </div>
+
+  <!-- ── 2. Age Requirement ── -->
+  <div class="section">
+    <div class="section-number">Article II</div>
+    <h2>Age Requirement &amp; Children's Privacy</h2>
+
+    <div class="age-callout">
+      <p><strong>Masque-Raiders is intended for players aged 13 years and older.</strong> We do not knowingly collect personal information from children under the age of 13. If you are under 13, please do not download or play this game.</p>
+    </div>
+
+    <p>If you are between 13 and 17 years of age, we encourage you to review this policy with a parent or guardian before playing. Some jurisdictions may require parental consent for data processing of minors aged 13–17; where required by law, we will seek such consent before collecting any personal data.</p>
+    <p>If we become aware that we have inadvertently collected personal information from a child under 13 without verifiable parental consent, we will take immediate steps to delete that information from our records. If you believe we may have collected information from a child under 13, please contact us immediately at the address provided in Article X.</p>
+    <p>Players aged 13 and above are subject to the full terms of this Privacy Policy. The game contains fantasy combat themes — players will encounter enemies including Mmawu, DarkMmawu, Entembe, and Zuzugu, and will engage in combat using attacks, blocks, and flip attacks. Parents should review the game's content rating before allowing younger teenagers to play.</p>
+  </div>
+
+  <!-- ── 3. Information We Collect ── -->
+  <div class="section">
+    <div class="section-number">Article III</div>
+    <h2>Information We Collect</h2>
+    <p>Masque-Raiders is designed to be played without requiring you to create an account or provide personal identifying information. However, certain data is collected automatically to operate and improve the game.</p>
+
+    <p><strong>Data collected automatically on your device:</strong></p>
+    <ul>
+      <li>Game progress data — current level index, completed levels, and unlocked achievements stored locally via Unity PlayerPrefs on your device</li>
+      <li>Score data — your high score, final score, and per-level scores, stored locally on your device</li>
+      <li>Game settings — your selected difficulty (Easy, Medium, Hard) and any other preferences you configure, stored locally</li>
+      <li>Gem wallet and achievement data — earned gems (Ruby, Sapphire, Emerald, Diamond, Amber) and unlocked achievements, stored locally on your device</li>
+      <li>Player death count and total play time — stored locally for statistical purposes and achievement tracking only</li>
+    </ul>
+
+    <p><strong>Data we do not collect:</strong></p>
+    <ul>
+      <li>Your real name, email address, or any contact information</li>
+      <li>Your location or GPS data</li>
+      <li>Photos, microphone input, or camera access</li>
+      <li>Payment or financial information (the game does not currently offer in-app purchases)</li>
+      <li>Social media profile data</li>
+      <li>Device contacts or call logs</li>
+    </ul>
+
+    <p>All game progress data described above is stored <strong>locally on your device only</strong> using Unity's PlayerPrefs system. It is not transmitted to our servers.</p>
+  </div>
+
+  <!-- ── 4. How We Use Information ── -->
+  <div class="section">
+    <div class="section-number">Article IV</div>
+    <h2>How We Use Your Information</h2>
+    <p>The locally stored data described in Article III is used exclusively to provide the game experience, including:</p>
+    <ul>
+      <li>Saving and restoring your game progress so you can continue from where you left off across sessions</li>
+      <li>Tracking your achievements and gem wallet so rewards persist between play sessions</li>
+      <li>Remembering your difficulty preference and game settings</li>
+      <li>Calculating your rank (S, A, B, C, or D) at the end of each level based on score, time, and survival performance</li>
+      <li>Enabling the Continue Game feature, which restores your last saved level index</li>
+    </ul>
+    <p>We do not use your data for advertising, profiling, or any purpose other than operating the game as described above.</p>
+  </div>
+
+  <!-- ── 5. Third-Party Services ── -->
+  <div class="section">
+    <div class="section-number">Article V</div>
+    <h2>Third-Party Services &amp; SDKs</h2>
+    <p>Masque-Raiders is built with the <strong>Unity game engine</strong>. Unity Technologies may collect certain technical and diagnostic data as part of the Unity runtime environment on your device. This data collection is governed by Unity Technologies' own Privacy Policy, available at <em>unity.com/legal/privacy-policy</em>.</p>
+    <p>We do not currently integrate third-party advertising networks, analytics platforms, social media SDKs, or payment processors into Masque-Raiders. If this changes in a future update, this policy will be updated accordingly and you will be notified through an in-app notice.</p>
+    <p>When you download Masque-Raiders from the Google Play Store or Apple App Store, those platforms may collect data about your download and usage according to their own privacy policies. We encourage you to review Google's and Apple's privacy policies for more information.</p>
+  </div>
+
+  <!-- ── 6. Data Storage & Security ── -->
+  <div class="section">
+    <div class="section-number">Article VI</div>
+    <h2>Data Storage &amp; Security</h2>
+    <p>All game data generated by Masque-Raiders is stored locally on your device through Unity's PlayerPrefs system, which uses your device's native storage mechanisms. This data does not leave your device and is not transmitted to or stored on our servers.</p>
+    <p>The security of your locally stored data depends on your device's own security features, including device encryption, screen lock, and operating system protections. We encourage you to keep your device's operating system and security settings up to date.</p>
+    <p>If you uninstall Masque-Raiders, your locally stored game data (progress, achievements, gems, scores) will be permanently deleted from your device. This data cannot be recovered after uninstallation.</p>
+    <p>Because we do not operate servers that store your personal data, we are not subject to server-side data breaches with respect to your game information.</p>
+  </div>
+
+  <!-- ── 7. Your Rights ── -->
+  <div class="section">
+    <div class="section-number">Article VII</div>
+    <h2>Your Rights &amp; Controls</h2>
+    <p>Because all data is stored locally on your device, you have full control over it at all times:</p>
+    <ul>
+      <li><strong>Access and review:</strong> Your game progress, scores, and achievements are visible within the game itself at all times</li>
+      <li><strong>Delete your data:</strong> You can reset all game data at any time by using the Reset function within the game settings, or by uninstalling the application</li>
+      <li><strong>Portability:</strong> As data is stored locally via PlayerPrefs, it is accessible through your device's standard app data management tools</li>
+      <li><strong>Opt out:</strong> You can stop all data collection by ceasing to use and uninstalling the application</li>
+    </ul>
+    <p>Depending on your jurisdiction, you may have additional rights under applicable data protection laws (such as GDPR in the European Union, CCPA in California, or PIPEDA in Canada). Since we do not currently process personal data on our servers, most of these rights are exercised directly through your device's controls. If you have questions about your rights, contact us at the address in Article X.</p>
+  </div>
+
+  <!-- ── 8. Device Permissions ── -->
+  <div class="section">
+    <div class="section-number">Article VIII</div>
+    <h2>Device Permissions</h2>
+    <p>Masque-Raiders requests only the permissions necessary to operate as a game. The permissions used may include:</p>
+    <ul>
+      <li><strong>Storage / Read-Write access:</strong> Required to save and load your game progress locally</li>
+      <li><strong>Screen orientation control:</strong> The game runs in landscape mode and controls screen orientation automatically to provide the best gameplay experience</li>
+      <li><strong>Audio output:</strong> Required to play game music, sound effects, and voice audio</li>
+      <li><strong>Vibration (if applicable):</strong> Used for gameplay feedback on supported devices</li>
+    </ul>
+    <p>We do not request access to your camera, microphone, contacts, location, or any permission not listed above. If your device's permission manager shows a permission not listed here, please contact us so we can investigate.</p>
+  </div>
+
+  <!-- ── 9. Game Content & Parental Guidance ── -->
+  <div class="section">
+    <div class="section-number">Article IX</div>
+    <h2>Game Content &amp; Parental Guidance</h2>
+    <p>Masque-Raiders is a fantasy action game set across multiple stages — beginning in the haunted forests of Stage 1 and progressing to burning villages in Stage 2. Players engage in combat against enemies including Mmawu scouts, DarkMmawu warriors, the Stage 1 boss Entembe, and the Stage 2 warlord Zuzugu.</p>
+    <p>The game features combat mechanics including attacks, combo systems, flip attacks, blocking, and projectile deflection. All combat is presented in a stylised fantasy context with no realistic gore or graphic violence.</p>
+    <p>The game does not contain online multiplayer, in-game chat, user-generated content, or any feature that allows players to communicate with other players or strangers. There is no social component that could expose younger players to contact from unknown individuals.</p>
+    <p>Parents and guardians of players aged 13–17 are encouraged to review the game's content and this privacy policy. The game does not contain advertising or in-app purchase prompts directed at younger players.</p>
+  </div>
+
+  <!-- ── 10. Changes to This Policy ── -->
+  <div class="section">
+    <div class="section-number">Article X</div>
+    <h2>Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time as the game evolves, new features are added, or legal requirements change. When we make material changes, we will notify players through an in-game notification on the next launch after the update takes effect, and we will update the Effective Date at the top of this document.</p>
+    <p>We encourage you to review this policy periodically. Your continued use of Masque-Raiders after any changes to this policy constitutes your acceptance of the updated terms.</p>
+    <p>If we ever begin collecting personal data beyond what is described in this policy, we will seek appropriate consent before doing so, particularly where required for players aged 13–17.</p>
+  </div>
+
+  <!-- ── 11. Contact ── -->
+  <div class="section">
+    <div class="section-number">Article XI</div>
+    <h2>Contact Us</h2>
+    <p>If you have questions about this Privacy Policy, wish to exercise your rights, or have concerns about how your data is handled — including reports of potential data collection from children under 13 — please contact us:</p>
+
+    <div class="contact-block">
+      <p><strong>Masque-Raiders Game Studio</strong></p>
+      <p style="color:var(--mist);font-size:0.9rem;margin-top:4px;">Privacy &amp; Data Enquiries</p>
+      <p style="margin-top:16px;">Email: <a href="mailto:privacy@Masque-Raidersgame.com">privacy@Masque-Raidersgame.com</a></p>
+      <p style="font-size:0.85rem;color:var(--mist);margin-top:12px;">We aim to respond to all privacy enquiries within 30 days.</p>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <footer class="footer">
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+    <p class="footer-text">
+      &copy; 2026 Masque-Raiders Game Studio. All rights reserved.<br>
+      Liberate the villages. Protect the people. Play with honour.
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>

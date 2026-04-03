@@ -1,1115 +1,1037 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Ncho - Traditional African Strategy Board Game. Play against AI with multiple difficulty levels.">
-    <title>Merike Games</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Merike Games — African-rooted strategy games and action adventures built with heart and imagination.">
+<title>Merike Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & tokens ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
-            --accent-color: #f39c12;
-            --light-bg: #ecf0f1;
-            --dark-bg: #34495e;
-            --text-light: #ffffff;
-            --text-dark: #2c3e50;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+:root {
+  --bg:       #0a0a0f;
+  --surface:  #111118;
+  --raised:   #18181f;
+  --border:   rgba(255,255,255,0.07);
+  --gold:     #e8a833;
+  --gold-dim: rgba(232,168,51,0.15);
+  --ember:    #d95f2a;
+  --teal:     #2ab8a0;
+  --text:     #e8e6e1;
+  --muted:    rgba(232,230,225,0.5);
+  --display:  'Syne', sans-serif;
+  --body:     'DM Sans', sans-serif;
+  --radius:   14px;
+  --radius-lg:22px;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-        /* Navigation */
-        nav {
-            background: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
+/* ── Ambient background ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 0%,   rgba(232,168,51,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%,  rgba(217,95,42,0.06)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 50%,   rgba(42,184,160,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            flex-wrap: wrap;
-        }
+/* ── Navigation ─────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
 
-        nav li {
-            margin: 0 1.5rem;
-        }
+nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  height: 64px;
+  gap: 4px;
+  flex-wrap: wrap;
+}
 
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s, transform 0.3s;
-            display: inline-block;
-        }
+nav a {
+  font-family: var(--display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
 
-        nav a:hover {
-            color: var(--accent-color);
-            transform: translateY(-2px);
-        }
+nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+nav a.active { color: var(--gold); background: var(--gold-dim); }
 
-        nav a.active {
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-        }
+/* ── Pages ──────────────────────────────────────────────────────────── */
+.page { display: none; padding: 88px 24px 80px; max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+.page.active { display: block; animation: fadeUp 0.45s ease both; }
 
-        /* Page Sections */
-        .page {
-            display: none;
-            padding: 100px 20px 50px;
-            max-width: 1200px;
-            margin: 0 auto;
-            animation: fadeIn 0.5s ease-in;
-        }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-        .page.active {
-            display: block;
-        }
+/* ── Section spacing ─────────────────────────────────────────────────── */
+.section-gap { margin-bottom: 64px; }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+/* ── Hero ───────────────────────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 72px 40px 64px;
+  margin-bottom: 48px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 400px; height: 200px;
+  background: radial-gradient(ellipse, rgba(232,168,51,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            color: var(--text-light);
-            padding: 3rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            margin-bottom: 3rem;
-            box-shadow: var(--hover-shadow);
-            align-items: center;
-            justify-content: center;
-        }
+.hero-label {
+  font-family: var(--display);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
-        .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
+.hero p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 12px;
+}
 
-        .hero .tagline {
-            font-size: 1.1rem;
-            font-style: italic;
-            opacity: 0.8;
-        }
+/* ── Section headings ───────────────────────────────────────────────── */
+.section-label {
+  font-family: var(--display);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
 
-        .sub-hero {
-            text-align: center;
-            color: var(--text-light);
-            padding: 3rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            margin-bottom: 3rem;
-            box-shadow: var(--hover-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+h2.section-title {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: var(--text);
+}
 
-        }
+h3.card-title {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+  color: var(--text);
+}
 
-        /* Developer Card */
-        .developer-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+/* ── Cards ──────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  margin-bottom: 24px;
+  transition: border-color 0.25s;
+}
 
-        .developer-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: white;
-            box-shadow: var(--card-shadow);
-        }
+.card:hover { border-color: rgba(255,255,255,0.12); }
 
-        .developer-info {
-            flex: 1;
-            min-width: 250px;
-        }
+/* ── Developer card ─────────────────────────────────────────────────── */
+.dev-card {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
 
-        .developer-info h2 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
+.dev-avatar {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  border: 3px solid var(--border);
+}
 
-        .developer-info .role {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
+.dev-name { font-family: var(--display); font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+.dev-role { font-size: 0.85rem; color: var(--gold); margin-bottom: 12px; letter-spacing: 0.04em; }
+.dev-bio  { font-size: 0.9rem; color: var(--muted); max-width: 520px; }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
+/* ── Feature grid ───────────────────────────────────────────────────── */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
 
-        .social-links a {
-            padding: 0.5rem 1.5rem;
-            background: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s;
-        }
+.feature-pill {
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  transition: border-color 0.2s, transform 0.2s;
+}
 
-        .social-links a:hover {
-            background: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: var(--hover-shadow);
-        }
+.feature-pill:hover { border-color: rgba(232,168,51,0.3); transform: translateY(-2px); }
+.feature-pill h3 { font-family: var(--display); font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.feature-pill p  { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
-        /* Content Card */
-        .content-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+/* ── Pill buttons / links ───────────────────────────────────────────── */
+.pill-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 
-        .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-shadow);
-        }
+.pill {
+  font-family: var(--display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border-radius: 100px;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: var(--raised);
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-        .content-card h2 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 2rem;
-        }
+.pill:hover { color: var(--text); border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); }
+.pill.primary { background: var(--gold); color: #0a0a0f; border-color: var(--gold); }
+.pill.primary:hover { background: #f0b840; border-color: #f0b840; }
+.pill.ember { background: var(--ember); color: #fff; border-color: var(--ember); }
+.pill.ember:hover { background: #e8703d; border-color: #e8703d; }
 
-        .content-card h3 {
-            color: var(--secondary-color);
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+/* ── Download buttons ───────────────────────────────────────────────── */
+.download-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; }
 
-        /* Game Screenshots */
-        .screenshots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: 100px;
+  transition: all 0.2s;
+}
 
-        .screenshot-item {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+.dl-btn.android { background: var(--teal); color: #0a0a0f; }
+.dl-btn.android:hover { background: #35d4ba; transform: translateY(-2px); }
+.dl-btn.ios { background: var(--raised); color: var(--muted); border: 1px solid var(--border); }
 
-        .screenshot-item:hover {
-            transform: scale(1.05);
-            box-shadow: var(--hover-shadow);
-        }
+/* ── Screenshots grid ───────────────────────────────────────────────── */
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
 
-        .screenshot-placeholder {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            position: relative;
-        }
+.screenshot-item {
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s;
+}
 
-        .screenshot-caption {
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
+.screenshot-item:hover { transform: scale(1.02); border-color: rgba(232,168,51,0.3); }
 
-        /* Features List */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
+.screenshot-placeholder {
+  width: 100%;
+  height: 220px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
-        .feature-item {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            padding: 1.5rem;
-            border-radius: 15px;
-            border-left: 4px solid var(--accent-color);
-            transition: transform 0.3s;
-        }
+.screenshot-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+.screenshot-placeholder .placeholder-icon { font-size: 3rem; opacity: 0.3; }
 
-        .feature-item:hover {
-            transform: translateX(10px);
-        }
+.screenshot-caption {
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
 
-        .feature-item h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
+/* ── Table ──────────────────────────────────────────────────────────── */
+.rules-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.rules-table th {
+  background: var(--raised);
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.rules-table td {
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  vertical-align: top;
+}
+.rules-table td strong { color: var(--text); font-weight: 500; }
+.rules-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-        /* Download Buttons */
-        .download-section {
-            text-align: center;
-            margin: 3rem 0;
-        }
+/* ── Games grid ─────────────────────────────────────────────────────── */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
 
-        .download-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+.game-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s;
+  cursor: pointer;
+}
 
-        .download-btn {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            background: var(--secondary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-            box-shadow: var(--card-shadow);
-        }
+.game-card:hover { transform: translateY(-6px); border-color: rgba(232,168,51,0.25); }
 
-        .download-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-3px);
-            box-shadow: var(--hover-shadow);
-        }
+.game-card.featured {
+  border-color: rgba(232,168,51,0.4);
+  box-shadow: 0 0 0 1px rgba(232,168,51,0.15), 0 20px 40px rgba(0,0,0,0.4);
+}
 
-        /* Other Games Section */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
+.game-card-img {
+  width: 100%; height: 180px;
+  background: var(--raised);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+  overflow: hidden;
+  position: relative;
+}
 
-        .game-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
+.game-card-img img { width: 100%; height: 100%; object-fit: cover; }
 
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--hover-shadow);
-        }
+.current-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--gold);
+  color: #0a0a0f;
+  font-family: var(--display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
 
-        .game-card-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
+.game-card-body { padding: 20px 22px; }
+.game-card-body h3 { font-family: var(--display); font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+.game-card-body p  { font-size: 0.85rem; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
 
-        .game-card-content {
-            padding: 1.5rem;
-        }
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
 
-        .game-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
+.status-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+}
 
-        .game-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--accent-color);
-            color: white;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
+.status-dot.active::before  { background: var(--teal);  box-shadow: 0 0 6px var(--teal); }
+.status-dot.current::before { background: var(--gold);  box-shadow: 0 0 6px var(--gold); }
+.status-dot.planning::before{ background: var(--muted); }
 
-        /* Footer */
-        footer {
-            background: rgba(44, 62, 80, 0.95);
-            color: var(--text-light);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
+/* ── Masque Raiders hero ─────────────────────────────────────────────── */
+.masque-hero {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 32px;
+  min-height: 320px;
+  display: flex;
+  align-items: flex-end;
+  border: 1px solid rgba(232,168,51,0.3);
+}
 
-        footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
+.masque-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(217,95,42,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(232,168,51,0.12) 0%, transparent 60%),
+    var(--raised);
+}
 
-        footer a:hover {
-            text-decoration: underline;
-        }
+.masque-hero-img {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
+}
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+.masque-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px 40px 36px;
+  background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, transparent 100%);
+  width: 100%;
+}
 
-            .hero .subtitle {
-                font-size: 1.1rem;
-            }
+.masque-hero-content .section-label { margin-bottom: 8px; }
+.masque-hero-content h2 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
 
-            nav li {
-                margin: 0.5rem 1rem;
-            }
+.masque-hero-content p {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin-bottom: 20px;
+}
 
-            .developer-card {
-                flex-direction: column;
-                text-align: center;
-            }
+/* ── Privacy link ───────────────────────────────────────────────────── */
+.privacy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--raised);
+  transition: all 0.2s;
+}
 
-            .social-links {
-                justify-content: center;
-            }
-        }
+.privacy-link:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
 
-        /* Rules Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+.privacy-link svg { width: 13px; height: 13px; opacity: 0.6; flex-shrink: 0; }
 
-        th,
-        td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+/* ── Sub-hero (screenshots pages) ───────────────────────────────────── */
+.sub-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 28px;
+}
 
-        th {
-            background: var(--primary-color);
-            color: white;
-            font-weight: 600;
-        }
+.sub-hero img { width: 56px; height: 56px; object-fit: contain; border-radius: 12px; }
+.sub-hero h2 { font-family: var(--display); font-size: 1.4rem; font-weight: 800; }
 
-        tr:hover {
-            background: rgba(102, 126, 234, 0.05);
-        }
-    </style>
+/* ── Social links ───────────────────────────────────────────────────── */
+.social-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; justify-content: center; }
+
+/* ── Requirements grid ──────────────────────────────────────────────── */
+.req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.req-item {
+  background: var(--raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.req-item h3 { font-family: var(--display); font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+.req-item ul { list-style: none; }
+.req-item li { font-size: 0.85rem; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--border); }
+.req-item li:last-child { border-bottom: none; }
+
+/* ── Divider ────────────────────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+footer p { font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+footer a { color: var(--gold); text-decoration: none; transition: opacity 0.2s; }
+footer a:hover { opacity: 0.75; }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  nav { padding: 0 16px; }
+  .page { padding: 80px 16px 60px; }
+  .card { padding: 24px 20px; }
+  .masque-hero-content { padding: 28px 24px; }
+  .dev-card { flex-direction: column; }
+}
+</style>
 </head>
-
 <body>
-    <!-- Navigation -->
-    <nav>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────── -->
+<nav>
+  <ul>
+    <li><a href="#home"         class="nav-link active"  onclick="showPage('home',event)">Home</a></li>
+    <li><a href="#masque"       class="nav-link"         onclick="showPage('masque',event)">Masque Raiders</a></li>
+    <li><a href="#documentation"class="nav-link"         onclick="showPage('documentation',event)">Docs</a></li>
+    <li><a href="#screenshots"  class="nav-link"         onclick="showPage('screenshots',event)">Screenshots</a></li>
+    <li><a href="#download"     class="nav-link"         onclick="showPage('download',event)">Download</a></li>
+    <li><a href="#other-games"  class="nav-link"         onclick="showPage('other-games',event)">More Games</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- HOME                                                                -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="home" class="page active">
+
+  <div class="hero">
+    <div class="hero-label">Merike Games</div>
+    <h1>Games Made with Heart<br>and Imagination</h1>
+    <p>Challenge your mind with innovative games, endless adventures, and timeless fun rooted in African culture.</p>
+  </div>
+
+  <!-- Developer -->
+  <div class="card section-gap">
+    <div class="section-label">The maker</div>
+    <h2 class="section-title">Meet the Developer</h2>
+    <div class="dev-card">
+      <div class="dev-avatar">👨‍💻</div>
+      <div>
+        <div class="dev-name">Ikenna</div>
+        <div class="dev-role">Game Developer &amp; Unity Engineer</div>
+        <p class="dev-bio">Passionate about creating engaging mobile games that blend traditional African culture with modern technology. Specialising in Unity development and bringing classic experiences to digital platforms.</p>
+        <div class="pill-links" style="margin-top:16px">
+          <a class="pill" href="https://github.com/mcikenna"              target="_blank">GitHub</a>
+          <a class="pill" href="https://linkedin.com/in/ikenna-ifekaonwu/"target="_blank">LinkedIn</a>
+          <a class="pill" href="mailto:meriktech@gmail.com">Email</a>
+          <a class="pill" href="https://ikennaifek.netlify.app/"          target="_blank">Website</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured — Masque Raiders callout -->
+  <div class="card section-gap" style="border-color:rgba(232,168,51,0.35);background:linear-gradient(135deg,rgba(232,168,51,0.06) 0%,var(--surface) 60%)">
+    <div class="section-label">Current Release</div>
+    <h2 class="section-title">Masque Raiders — Now Available</h2>
+    <p style="color:var(--muted);max-width:580px;margin-bottom:24px">Vanquish the enemies terrorising the villages, starting deep in the haunted forest. Battle through multiple stages, defeat the bosses, and liberate the land.</p>
+    <div class="pill-links">
+      <a class="pill primary" href="#masque" onclick="showPage('masque',event)">Explore the Game</a>
+      <a class="pill" href="masqueRaiders.html" target="_blank">Privacy Policy</a>
+    </div>
+  </div>
+
+  <!-- Ncho -->
+  <div class="card section-gap">
+    <div class="section-label">Strategy</div>
+    <h2 class="section-title">Ncho — Traditional African Board Game</h2>
+    <p style="color:var(--muted);margin-bottom:20px">A centuries-old African strategy board game brought to modern mobile devices, preserving its strategic depth and cultural significance.</p>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>🤖 AI Opponent</h3><p>Easy, Medium, and Hard difficulty levels.</p></div>
+      <div class="feature-pill"><h3>📱 Cross-Platform</h3><p>Optimised for Android and iOS touch controls.</p></div>
+      <div class="feature-pill"><h3>💾 Save System</h3><p>Pause and return any time — progress is kept.</p></div>
+      <div class="feature-pill"><h3>🏆 Score Tracking</h3><p>Track wins, losses, and your progress over time.</p></div>
+    </div>
+  </div>
+
+  <!-- Ayo2D -->
+  <div class="card section-gap">
+    <div class="section-label">Strategy</div>
+    <h2 class="section-title">Ayo2D — Yoruba Mancala Game</h2>
+    <p style="color:var(--muted);margin-bottom:20px">A traditional Yoruba strategy board game in beautiful 2D. Experience ancient wisdom of African board gaming with animated hands, smart AI, and a best-of-five championship format.</p>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>🤖 Smart AI</h3><p>Three levels — Easy, Medium, Hard strategic planning.</p></div>
+      <div class="feature-pill"><h3>🎯 Round Championship</h3><p>Best-of-5 rounds where captures decide the winner.</p></div>
+      <div class="feature-pill"><h3>✋ Animated Hands</h3><p>Smooth 2D animations bring the board to life.</p></div>
+      <div class="feature-pill"><h3>📊 Live Scoring</h3><p>Real-time captured stone count and round stats.</p></div>
+    </div>
+  </div>
+
+  <!-- Quick links -->
+  <div class="card">
+    <h2 class="section-title" style="font-size:1.1rem">Quick Links</h2>
+    <div class="pill-links">
+      <a class="pill" href="#masque"        onclick="showPage('masque',event)">Masque Raiders</a>
+      <a class="pill" href="#documentation" onclick="showPage('documentation',event)">Documentation</a>
+      <a class="pill" href="#screenshots"   onclick="showPage('screenshots',event)">Screenshots</a>
+      <a class="pill" href="#download"      onclick="showPage('download',event)">Download</a>
+      <a class="pill" href="#other-games"   onclick="showPage('other-games',event)">More Games</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- MASQUE RAIDERS                                                      -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="masque" class="page">
+
+  <!-- Hero banner -->
+  <div class="masque-hero">
+    <div class="masque-hero-bg"></div>
+    <img class="masque-hero-img" src="images/masqueR.png" alt="Masque Raiders">
+    <div class="masque-hero-content">
+      <div class="section-label">Current Game · Action Combat</div>
+      <h2>Masque Raiders</h2>
+      <p>Vanquish the enemies terrorising the villages. Starting in the haunted forest, battle through stages, defeat bosses, and liberate the land.</p>
+      <div class="pill-links">
+        <span class="status-dot current">In Active Development</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="card section-gap">
+    <div class="section-label">About the game</div>
+    <h2 class="section-title">The Mission</h2>
+    <p style="color:var(--muted);margin-bottom:16px">Villages across the land are under siege. As a lone warrior you must cut through every enemy — from Mmawu scouts lurking in the forest to the warlord Zuzugu commanding burning villages. No retreat. No mercy.</p>
+    <p style="color:var(--muted)">Masque Raiders is a side-scrolling mobile action game built in Unity. Progress through multiple levels, each ending with a boss encounter. Defeat all bosses to liberate the land and claim victory.</p>
+  </div>
+
+  <!-- Stage breakdown -->
+  <div class="card section-gap">
+    <div class="section-label">Stages &amp; Enemies</div>
+    <h2 class="section-title">The Enemy Forces</h2>
+    <div class="features-grid">
+      <div class="feature-pill">
+        <h3>🌲 Stage 1 — The Forest</h3>
+        <p>Face Mmawu scouts and DarkMmawu warriors across three escalating levels. The forest boss is <strong style="color:var(--text)">Entembe</strong>.</p>
+      </div>
+      <div class="feature-pill">
+        <h3>🔥 Stage 2 — The Villages</h3>
+        <p>Entembe's fallen fighters now join Mmawu as pawns. The warlord <strong style="color:var(--text)">Zuzugu</strong> commands them all.</p>
+      </div>
+      <div class="feature-pill">
+        <h3>⚔️ Wave System</h3>
+        <p>Each level sends randomised waves of enemies. Clear every wave to trigger the boss encounter.</p>
+      </div>
+      <div class="feature-pill">
+        <h3>📈 Scaling Difficulty</h3>
+        <p>Enemy speed, health, and aggression increase with each level. Later bosses are formidable.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combat mechanics -->
+  <div class="card section-gap">
+    <div class="section-label">Combat System</div>
+    <h2 class="section-title">Fight Smart, Fight Hard</h2>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>👊 Combo Attacks</h3><p>Chain up to four attacks — Attack1 through Attack4 — with a special combo finisher when the meter is full.</p></div>
+      <div class="feature-pill"><h3>🤸 Flip Attack</h3><p>Launch a ground flip dealing damage to any enemy in your path. Can only be performed while grounded.</p></div>
+      <div class="feature-pill"><h3>🛡️ Block &amp; Deflect</h3><p>Hold block to reduce incoming damage. Time it right to deflect projectiles back at enemies.</p></div>
+      <div class="feature-pill"><h3>🦘 Double Jump</h3><p>Jump twice to avoid attacks and reach elevated positions. A second jump can also be used mid-air.</p></div>
+      <div class="feature-pill"><h3>🔥 Combo Meter</h3><p>Land hits to fill the combo meter. A full meter unlocks a devastating special attack dealing massive damage.</p></div>
+      <div class="feature-pill"><h3>🏆 Ranking</h3><p>Earn S, A, B, C, or D rank after each level based on score, time, and whether you took damage.</p></div>
+    </div>
+  </div>
+
+  <!-- Achievements & Gems -->
+  <div class="card section-gap">
+    <div class="section-label">Rewards</div>
+    <h2 class="section-title">Achievements &amp; Gems</h2>
+    <p style="color:var(--muted);margin-bottom:20px">Unlock 16 achievements through combat skill, speed, and survival. Every achievement awards gems that persist across sessions.</p>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>💎 Diamond</h3><p>Awarded for perfect runs, Iron Will, Untouchable, Vanquisher, and Legendary Warrior.</p></div>
+      <div class="feature-pill"><h3>🔴 Ruby</h3><p>Earned by defeating bosses and landing the first kill.</p></div>
+      <div class="feature-pill"><h3>🟢 Emerald</h3><p>Rewarded for completing levels and progressing through the story.</p></div>
+      <div class="feature-pill"><h3>🔵 Sapphire</h3><p>Given for combo mastery, speed runs, and flip attack proficiency.</p></div>
+      <div class="feature-pill"><h3>🟠 Amber</h3><p>Awarded for survival feats — Last Stand, Shield Wall, and Resilient.</p></div>
+    </div>
+  </div>
+
+  <!-- Age rating & Privacy -->
+  <div class="card section-gap" style="border-color:rgba(255,255,255,0.12)">
+    <div class="section-label">Rating &amp; Privacy</div>
+    <h2 class="section-title">Player Information</h2>
+    <p style="color:var(--muted);margin-bottom:8px">Masque Raiders is rated for players <strong style="color:var(--text)">aged 13 and above</strong>. The game contains fantasy combat. All progress data is stored locally on your device — no personal information is collected or transmitted.</p>
+    <p style="color:var(--muted);margin-bottom:24px">Read our full privacy policy to understand exactly what data is stored and how it is used.</p>
+    <div class="pill-links">
+      <a class="privacy-link" href="masqueRaiders.html" target="_blank">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5a4 4 0 0 0-4 4v1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1h-1v-1a4 4 0 0 0-4-4z"/></svg>
+        View Privacy Policy
+      </a>
+      <a class="pill" href="#download" onclick="showPage('download',event)">Download Now</a>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="card">
+    <div class="section-label">Controls</div>
+    <h2 class="section-title">How to Play</h2>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>◀ ▶ Movement</h3><p>On-screen left and right buttons on the left side of the screen.</p></div>
+      <div class="feature-pill"><h3>JUMP</h3><p>Tap once to jump. Tap again while airborne for a double jump.</p></div>
+      <div class="feature-pill"><h3>ATK — Attack</h3><p>Tap to attack. Chain taps build a combo. Fill the meter for the combo finisher.</p></div>
+      <div class="feature-pill"><h3>FLIP — Flip Attack</h3><p>Tap while grounded to perform a forward flip attack dealing damage.</p></div>
+      <div class="feature-pill"><h3>BLK — Block</h3><p>Hold to block incoming damage and deflect projectiles.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- DOCUMENTATION                                                       -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="documentation" class="page">
+
+  <div class="card section-gap">
+    <div class="section-label">Ncho</div>
+    <h2 class="section-title">Ncho Game Documentation</h2>
+    <p style="color:var(--muted);margin-bottom:24px">Everything you need to know to play Ncho — traditional African strategy on your mobile device.</p>
+
+    <h3 style="font-family:var(--display);font-size:0.95rem;color:var(--gold);margin-bottom:8px">Objective</h3>
+    <p style="color:var(--muted);margin-bottom:20px">Capture more stones than your opponent by strategically distributing and collecting stones across the board.</p>
+
+    <table class="rules-table">
+      <thead><tr><th>Rule</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Starting</strong></td><td>12 pots × 4 stones each. Player goes first.</td></tr>
+        <tr><td><strong>Making a move</strong></td><td>Select one of your 6 pots. Stones are distributed clockwise one per pot.</td></tr>
+        <tr><td><strong>Capturing</strong></td><td>If the last stone lands making a pot have exactly 4, you capture all 4.</td></tr>
+        <tr><td><strong>Continuing</strong></td><td>If the last stone lands in a non-empty pot (not making 4), pick up and continue.</td></tr>
+        <tr><td><strong>End of turn</strong></td><td>Your turn ends when the last stone lands in an empty pot.</td></tr>
+        <tr><td><strong>End of round</strong></td><td>4 or fewer stones remain. Last capturer takes the remainder.</td></tr>
+        <tr><td><strong>Winning</strong></td><td>Most stones wins the round. Win best of 5 rounds to win the game.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="features-grid" style="margin-top:28px">
+      <div class="feature-pill"><h3>💡 Plan Ahead</h3><p>Think about where your last stone lands before moving.</p></div>
+      <div class="feature-pill"><h3>🎯 Aim for Captures</h3><p>Land in pots with 3 stones to capture 4.</p></div>
+      <div class="feature-pill"><h3>🛡️ Defensive Play</h3><p>Avoid leaving pots with 3 stones on your side.</p></div>
+      <div class="feature-pill"><h3>🔄 Chain Moves</h3><p>Landing in non-empty pots lets you continue — use it strategically!</p></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="card">
+    <div class="section-label">Ayo2D</div>
+    <h2 class="section-title">Ayo2D Game Documentation</h2>
+    <p style="color:var(--muted);margin-bottom:24px">Authentic Yoruba Ayo rules in a beautiful 2D championship format.</p>
+
+    <h3 style="font-family:var(--display);font-size:0.95rem;color:var(--gold);margin-bottom:8px">Objective</h3>
+    <p style="color:var(--muted);margin-bottom:20px">Win 3 out of 5 rounds by capturing more stones than your opponent each round.</p>
+
+    <table class="rules-table">
+      <thead><tr><th>Rule</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Starting</strong></td><td>12 pots × 4 stones. Player (blue) goes first.</td></tr>
+        <tr><td><strong>Making a move</strong></td><td>Select any bottom-row pot. The hand picks up stones and drops them clockwise.</td></tr>
+        <tr><td><strong>Capturing</strong></td><td>Last stone landing to make exactly 4 in a pot — capture all 4.</td></tr>
+        <tr><td><strong>Continuing</strong></td><td>Last stone in a non-empty pot (not 4) → pick up and continue.</td></tr>
+        <tr><td><strong>End of turn</strong></td><td>Last stone lands in an empty pot.</td></tr>
+        <tr><td><strong>End of round</strong></td><td>4 or fewer stones remain. Last capturer takes them.</td></tr>
+        <tr><td><strong>Winning</strong></td><td>Win the round by capturing the most stones. Win 3 rounds to win the match.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- SCREENSHOTS                                                         -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="screenshots" class="page">
+
+  <div class="sub-hero">
+    <img src="images/ncho_logo.png" alt="Ncho logo">
+    <div>
+      <div class="section-label">Gallery</div>
+      <h2>Ncho Screenshots</h2>
+    </div>
+  </div>
+
+  <div class="screenshots-grid section-gap">
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/ncho1.webp"    alt="Ncho features"></div>  <div class="screenshot-caption">Game Features</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/ncho3.webp"    alt="Ncho board"></div>    <div class="screenshot-caption">Game Board</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/nchoMobile.png"alt="Ncho mobile"></div>   <div class="screenshot-caption">Gameplay Action</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/gameOver.png"  alt="Game over"></div>    <div class="screenshot-caption">Victory Screen</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/ayoSettings.png"alt="Settings"></div>    <div class="screenshot-caption">Settings Menu</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/main_menu.png" alt="Main menu"></div>    <div class="screenshot-caption">Main Menu</div></div>
+  </div>
+
+  <div class="sub-hero">
+    <img src="images/AyoLogo512.png" alt="Ayo2D logo">
+    <div>
+      <div class="section-label">Gallery</div>
+      <h2>Ayo2D Screenshots</h2>
+    </div>
+  </div>
+
+  <div class="screenshots-grid section-gap">
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/gameView2.png"      alt="Main menu"></div>    <div class="screenshot-caption">Main Menu</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/fetGraphNoLogo.png" alt="Board"></div>        <div class="screenshot-caption">Game Board</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/Tablet10.2.png"     alt="Tablet"></div>       <div class="screenshot-caption">Gameplay Action</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/DrawBoard.png"      alt="Draw"></div>         <div class="screenshot-caption">Draw Screen</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/ayoSettings.png"   alt="Settings"></div>     <div class="screenshot-caption">Settings Menu</div></div>
+    <div class="screenshot-item"><div class="screenshot-placeholder"><img src="images/10inchSjort.png"   alt="Features"></div>     <div class="screenshot-caption">Game Features</div></div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title" style="font-size:1.1rem">Visual Features</h2>
+    <div class="features-grid">
+      <div class="feature-pill"><h3>🎨 Modern UI</h3><p>Clean interface with smooth animations and transitions.</p></div>
+      <div class="feature-pill"><h3>📐 Responsive</h3><p>Layouts adapted for all screen sizes and orientations.</p></div>
+      <div class="feature-pill"><h3>👆 Touch First</h3><p>Intuitive touch controls designed for mobile gameplay.</p></div>
+      <div class="feature-pill"><h3>✨ Visual Feedback</h3><p>Every action has a clear visual and audio response.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- DOWNLOAD                                                            -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="download" class="page">
+
+  <div class="card section-gap" style="text-align:center">
+    <img src="images/ncho_logo.png" alt="Ncho" style="width:72px;border-radius:16px;margin-bottom:16px">
+    <div class="section-label">Free to Play</div>
+    <h2 class="section-title">Download Ncho</h2>
+    <p style="color:var(--muted);max-width:480px;margin:0 auto 4px">Available on Android. iOS coming soon.</p>
+    <div class="download-row">
+      <a class="dl-btn android" href="https://play.google.com/store/apps/details?id=com.UnityTechnologies.com.unity.merike.ncho" target="_blank">📱 Android — Play Store</a>
+      <a class="dl-btn ios">🍎 iOS — Coming Soon</a>
+    </div>
+  </div>
+
+  <div class="card section-gap" style="text-align:center">
+    <img src="images/AyoLogo512.png" alt="Ayo2D" style="width:72px;border-radius:16px;margin-bottom:16px">
+    <div class="section-label">Free to Play</div>
+    <h2 class="section-title">Download Ayo2D</h2>
+    <p style="color:var(--muted);max-width:480px;margin:0 auto 4px">Available on Android. iOS coming soon.</p>
+    <div class="download-row">
+      <a class="dl-btn android" href="https://play.google.com/store/apps/details?id=com.Merike.Ayo" target="_blank">📱 Android — Play Store</a>
+      <a class="dl-btn ios">🍎 iOS — Coming Soon</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Requirements</div>
+    <h2 class="section-title">System Requirements</h2>
+    <div class="req-grid">
+      <div class="req-item">
+        <h3>Android</h3>
         <ul>
-            <li><a href="#home" class="nav-link active" onclick="showPage('home')">Home</a></li>
-            <li><a href="#documentation" class="nav-link" onclick="showPage('documentation')">Documentation</a></li>
-            <li><a href="#screenshots" class="nav-link" onclick="showPage('screenshots')">Screenshots</a></li>
-            <li><a href="#download" class="nav-link" onclick="showPage('download')">Download</a></li>
-            <li><a href="#other-games" class="nav-link" onclick="showPage('other-games')">Other Games</a></li>
+          <li>Android 6.0 or higher</li>
+          <li>1 GB RAM minimum</li>
+          <li>100 MB free storage</li>
         </ul>
-    </nav>
+      </div>
+      <div class="req-item">
+        <h3>iOS</h3>
+        <ul>
+          <li>iOS 12.0 or higher</li>
+          <li>iPhone 6 or newer</li>
+          <li>100 MB free storage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-    <!-- Home Page -->
-    <div id="home" class="page active">
-        <!-- Hero Section -->
-        <div class="hero">
-            <h1>Merike Games</h1>
-            <p class="subtitle">Games Made with Heart and Imagination.</p>
-            <p class="tagline">Challenge your mind with Innovative Games, endless Adventures, timeless Fun.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- OTHER GAMES                                                         -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<div id="other-games" class="page">
+
+  <div class="hero" style="margin-bottom:40px">
+    <div class="hero-label">Merike Games</div>
+    <h1>More Games</h1>
+    <p style="margin-top:8px">Explore what we're building next.</p>
+  </div>
+
+  <div class="games-grid section-gap">
+
+    <div class="game-card featured">
+      <div class="game-card-img" style="height:220px">
+        <img src="images/masqueR.png" alt="Masque Raiders">
+        <span class="current-badge">Current</span>
+      </div>
+      <div class="game-card-body">
+        <h3>Masque Raiders</h3>
+        <p>Vanquish the invading forces terrorising the villages. Fight through the forest, battle bosses, and liberate the land.</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <span class="status-dot current">In Development</span>
+          <a class="pill primary" style="font-size:0.72rem;padding:7px 16px" href="#masque" onclick="showPage('masque',event)">Learn More</a>
         </div>
-
-        <!-- Developer Section -->
-        <div class="content-card">
-            <h2>Meet the Developer</h2>
-            <div class="developer-card">
-                <div class="developer-avatar">👨‍💻</div>
-                <div class="developer-info">
-                    <h2>Ikenna</h2>
-                    <p class="role">Game Developer & Unity Engineer</p>
-                    <p>Passionate about creating engaging mobile games that blend traditional culture with modern
-                        technology. Specializing in Unity development and bringing classic board games to digital
-                        platforms.</p>
-                    <div class="social-links">
-                        <a href="https://github.com/mcikenna" target="_blank">GitHub</a>
-                        <a href="https://linkedin.com/in/ikenna-ifekaonwu/" target="_blank">LinkedIn</a>
-                        <a href="mailto:meriktech@gmail.com">Email</a>
-                        <a href="https://ikennaifek.netlify.app/" target="_blank">Website</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Ncho -->
-        <div class="content-card">
-            <h2>About Ncho Game</h2>
-            <p>Ncho is a traditional African strategy board game that has been played for centuries. This digital
-                adaptation brings the classic gameplay to modern mobile devices while preserving the strategic depth and
-                cultural significance of the original game.</p>
-
-            <h3>🎯 Key Features</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>🤖 AI Opponent</h3>
-                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy, Medium, and Hard.
-                    </p>
-                </div>
-                <div class="feature-item">
-                    <h3>📱 Cross-Platform</h3>
-                    <p>Play on Android and iOS devices with optimized touch controls.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>💾 Save System</h3>
-                    <p>Pause and return to your game anytime. Your progress is automatically saved.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🎨 Beautiful UI</h3>
-                    <p>Clean, modern interface with smooth animations and visual feedback.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🔊 Sound Effects</h3>
-                    <p>Immersive audio experience with background music and sound effects.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>🏆 Score Tracking</h3>
-                    <p>Track your wins, losses, and progress over time.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Ayo2D game -->
-        <div class="content-card">
-            <h2>About Ayo2D Game</h2>
-            <p class="intro-text">
-                Ayo (also known as Ayoayo or Ayo-Ayo) is a traditional Yoruba strategy board game that has been played
-                for centuries across West Africa.
-                This digital 2D adaptation brings the classic mancala-style gameplay to modern devices while preserving
-                the strategic depth,
-                cultural significance, and engaging gameplay of the original. Experience the ancient wisdom of African
-                board gaming in a beautiful,
-                modern interface designed for both beginners and seasoned players.
-            </p>
-
-            <h3>🎯 Key Features</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3><span class="emoji">🤖</span>Smart AI Opponent</h3>
-                    <p>Challenge yourself against intelligent AI with three difficulty levels: Easy (random moves),
-                        Medium (tactical captures), and Hard (advanced strategic planning). Perfect for learning or
-                        testing your mastery!</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🎯</span>Round-Based Championship</h3>
-                    <p>Compete in best-of-5 rounds where each round winner is determined by stone captures. Win the
-                        majority of rounds to become the ultimate champion!</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">✋</span>Animated Hand Movement</h3>
-                    <p>Watch as animated hands move clockwise around the board, dropping stones into pots with smooth 2D
-                        animations that bring the game to life.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🎨</span>Beautiful 2D Graphics</h3>
-                    <p>Clean, modern 2D interface with smooth animations, visual stone tracking, and intuitive touch
-                        controls optimized for mobile gameplay.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">📊</span>Live Score Tracking</h3>
-                    <p>Real-time display of captured stones, round wins, and game progress. See detailed statistics
-                        including pots captured and remaining stones claimed.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🏆</span>Achievement System</h3>
-                    <p>Track your performance with a comprehensive scoring system that awards points for pot captures,
-                        round victories, and overall game wins.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">⚡</span>Dynamic Gameplay Rules</h3>
-                    <p>Experience authentic Ayo rules: empty pot turn-ending, continuous movement on occupied pots,
-                        strategic captures on 4-stone pots, and automatic endgame stone collection.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🎭</span>Player vs Computer</h3>
-                    <p>Face off against the computer AI in single-player mode. Take control of the blue stones while the
-                        AI commands the black stones in strategic battle.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">📱</span>Cross-Platform Ready</h3>
-                    <p>Built with Unity 2D for seamless deployment on Android and iOS devices with optimized touch
-                        controls and responsive design.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🎬</span>Round Transitions</h3>
-                    <p>Beautiful transition screens announce each new round and display results with player scores,
-                        creating an immersive tournament atmosphere.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🔄</span>Clockwise Distribution</h3>
-                    <p>Stones move clockwise around the board in authentic Ayo fashion, with visual feedback showing
-                        exactly where each stone lands.</p>
-                </div>
-
-                <div class="feature-item">
-                    <h3><span class="emoji">🎯</span>Strategic Capture System</h3>
-                    <p>Master the art of timing to land your final stone in a pot with exactly 3 stones, creating a
-                        4-stone capture that claims all stones for your side!</p>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Quick Links -->
-        <div class="content-card">
-            <h2>Quick Links</h2>
-            <div class="social-links">
-                <a href="#documentation" onclick="showPage('documentation')">View Documentation</a>
-                <a href="#screenshots" onclick="showPage('screenshots')">See Screenshots</a>
-                <a href="#download" onclick="showPage('download')">Download Game</a>
-                <a href="#other-games" onclick="showPage('other-games')">More Games</a>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!-- Documentation Page -->
-    <div id="documentation" class="page">
-
-
-        <div class="content-card">
-            <div>
-                <h1>Ncho Game Documentation</h1>
-                <p class="subtitle">Everything you need to know about Ncho</p>
-            </div>
-            <h2>How to Play</h2>
-            <p>Ncho is a two-player strategy game played on a board with 12 pots arranged in two rows. Each pot starts
-                with 4 stones.</p>
-
-            <h3>Objective</h3>
-            <p>The goal is to capture more stones than your opponent by strategically distributing and collecting stones
-                across the board.</p>
-
-            <h3>Game Rules</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rule</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Starting the Game</strong></td>
-                        <td>Each of the 12 pots contains 4 stones at the start. Player goes first.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Making a Move</strong></td>
-                        <td>Select a pot from your side (6 pots). All stones from that pot are distributed one by one
-                            into subsequent pots clockwise.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Capturing Stones</strong></td>
-                        <td>If the last stone lands in a pot making it contain exactly 4 stones, you capture all 4
-                            stones.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Continuing Play</strong></td>
-                        <td>If the last stone lands in a non-empty pot (not making 4), pick up all stones from that pot
-                            and continue distributing.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ending a Turn</strong></td>
-                        <td>Your turn ends when the last stone lands in an empty pot.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>End of Round</strong></td>
-                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes
-                            the remaining stones.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Winning</strong></td>
-                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the
-                            game!</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Controls</h3>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>Touch/Click</h3>
-                    <p>Tap on any pot with stones on your side to select it and distribute the stones.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Pause</h3>
-                    <p>Tap the pause button or press the back button to pause the game.</p>
-                </div>
-                <div class="feature-item">
-                    <h3>Settings</h3>
-                    <p>Access game settings to adjust difficulty, sound, and other options.</p>
-                </div>
-            </div>
-
-            <h3>Game Features Explained</h3>
-
-            <h4>AI Difficulty Levels</h4>
-            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
-                <li><strong>Easy:</strong> AI makes random moves. Perfect for learning the game.</li>
-                <li><strong>Medium:</strong> AI tries to capture stones when possible. Good for practice.</li>
-                <li><strong>Hard:</strong> AI uses strategic planning and looks ahead. Real challenge!</li>
-            </ul>
-
-            <h4>Save & Continue</h4>
-            <p>Your game is automatically saved when you pause or return to the main menu. Resume anytime from where you
-                left off!</p>
-
-            <h4>Visual Feedback</h4>
-            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
-                <li><strong>Yellow Highlight:</strong> Pot you're hovering over (can be selected)</li>
-                <li><strong>Green Highlight:</strong> Pot you've selected</li>
-                <li><strong>Red Glow:</strong> Pot selected by the Keeper (AI opponent)</li>
-                <li><strong>Orange Flash:</strong> Stone dropped into a pot</li>
-            </ul>
-
-            <div style="padding: 20px;">
-                <h2>Tips & Strategies</h2>
-                <div class="features-grid">
-                    <div class="feature-item">
-                        <h3>💡 Plan Ahead</h3>
-                        <p>Think about where your last stone will land before making a move.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>🎯 Aim for Captures</h3>
-                        <p>Try to land your last stone in pots with 3 stones to capture 4.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>🛡️ Defensive Play</h3>
-                        <p>Avoid leaving pots with 3 stones on your side that opponent can capture.</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>🔄 Chain Moves</h3>
-                        <p>Landing in non-empty pots lets you continue - use this strategically!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <div class="game-info">
-                <div>
-                <h1>Ayo2D Game Documentation</h1>
-                <p class="subtitle">Everything you need to know about Ayo2D</p>
-            </div>
-                <h3>🎮 The Game of Strategy & Skill</h3>
-                <p>
-                    Ayo2D challenges players to think several moves ahead, capturing stones through clever distribution
-                    and strategic planning.
-                    Every decision matters as you compete to capture more stones than your opponent across multiple
-                    rounds in this best-of-five championship format.
-                </p>
-            </div>
-
-            
-
-            <div class="game-info" style="margin-top: 50px;">
-                <h3>Objective</h3>
-            <p>Win 3 out of 5 rounds by capturing more stones than your opponent each
-                    round.</p>
-
-            <h3>Game Rules</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rule</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Starting the Game</strong></td>
-                        <td>Each of the 12 pots contains 4 stones at the start. Player goes first.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Making a Move</strong></td>
-                        <td>Select any pot on your side (bottom 6 pots) that contains stones. The
-                    hand will pick up all stones and distribute them clockwise, one per pot.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Capturing Stones</strong></td>
-                        <td>If your last stone lands in a pot that then has exactly 4 stones, you
-                    capture all 4!</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Continuing Play</strong></td>
-                        <td>If your last stone lands in a non-empty pot (not resulting in 4
-                    stones), pick up all stones from that pot and continue distributing.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ending a Turn</strong></td>
-                        <td>Your turn ends when your last stone lands in an empty pot.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>End of Round</strong></td>
-                        <td>A round ends when 4 or fewer stones remain on the board. The last player to capture takes
-                            the remaining stones.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Winning</strong></td>
-                        <td>The player who captures the most stones wins the round. Win best of 5 rounds to win the
-                            game!</td>
-                    </tr>
-                </tbody>
-            </table>
-            </div>
-
-
-
-        </div>
-
-
+    <div class="game-card">
+      <div class="game-card-img">✈️</div>
+      <div class="game-card-body">
+        <h3>The Vanquisher</h3>
+        <p>A space game to eliminate enemy forces across the galaxy.</p>
+        <span class="status-dot planning">Planning</span>
+      </div>
     </div>
 
-    <!-- Screenshots Page -->
-    <div id="screenshots" class="page">
-        <div>
-            <div class="sub-hero">
-                <div style="padding: 20px;">
-                    <img src="images/ncho_logo.png" alt="nchoGame1" width="100px" />
-                </div>
-                <h1>Ncho Game Screenshots</h1>
-            </div>
-
-            <div class="screenshots-grid">
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder">
-                        <img src="images/ncho1.webp" alt="nchoGame1" width="500px" />
-                    </div>
-                    <div class="screenshot-caption">Game Features</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/ncho3.webp" alt="nchoGame3" width="500px" />
-                    </div>
-                    <div class="screenshot-caption">Game Board</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/nchoMobile.png" alt="nchoGame4"
-                            height="250px" /></div>
-                    <div class="screenshot-caption">Gameplay Action</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/gameOver.png" alt="gameOver" width="500px" />
-                    </div>
-                    <div class="screenshot-caption">Victory Screen</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/ayoSettings.png" alt="nchoGame2"
-                            width="500px" /></div>
-                    <div class="screenshot-caption">Settings Menu</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/main_menu.png" alt="mainMenu" width="500px" />
-                    </div>
-                    <div class="screenshot-caption">Main Menu</div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="sub-hero">
-                <div style="padding: 20px;">
-                    <img src="images/AyoLogo512.png" alt="nchoGame1" width="100px" />
-                </div>
-
-                <h1>Ayo2D Game Screenshots</h1>
-            </div>
-
-            <div class="screenshots-grid">
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder">
-                        <img src="images/gameView2.png" alt="nchoGame1" width="500px" />
-                    </div>
-                    <div class="screenshot-caption">Main Menu</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/fetGraphNoLogo.png" alt="nchoGame3"
-                            width="500px" /></div>
-                    <div class="screenshot-caption">Game Board</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/Tablet10.2.png" alt="nchoGame4"
-                            height="250px" /></div>
-                    <div class="screenshot-caption">Gameplay Action</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/DrawBoard.png" alt="gameOver" height="250px" />
-                    </div>
-                    <div class="screenshot-caption">Victory Screen</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/ayoSettings.png" alt="nchoGame2"
-                            height="250px" /></div>
-                    <div class="screenshot-caption">Settings Menu</div>
-                </div>
-                <div class="screenshot-item">
-                    <div class="screenshot-placeholder"><img src="images/10inchSjort.png" alt="features"
-                            height="250px" /></div>
-                    <div class="screenshot-caption">Game Features</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <h2>🎨 Visual Features</h2>
-            <ul style="margin-left: 2rem;">
-                <li>Clean, modern UI design</li>
-                <li>Smooth animations and transitions</li>
-                <li>Visual feedback for all actions</li>
-                <li>Responsive layouts for all screen sizes</li>
-                <li>Beautiful color schemes</li>
-                <li>Intuitive touch controls</li>
-        </div>
+    <div class="game-card">
+      <div class="game-card-img">🚚</div>
+      <div class="game-card-body">
+        <h3>Garbage Truck</h3>
+        <p>Clean and clear the streets — the city needs you.</p>
+        <span class="status-dot planning">Planning</span>
+      </div>
     </div>
 
-    <!-- Download Page -->
-    <div id="download" class="page">
-
-        <div class="content-card download-section">
-            <div style="padding: 20px;">
-                    <img src="images/ncho_logo.png" alt="nchoGame1" width="100px" />
-                </div>
-            <h3>⬇️ Download Ncho</h3>
-            <p class="subtitle">Available on Android & iOS</p>
-            <p>Download Ncho for free and start playing today!</p>
-
-            <div class="download-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.UnityTechnologies.com.unity.merike.ncho"
-                    class="download-btn">
-                    📱 Download for Android
-                </a>
-                <a href="#" class="download-btn">
-                    🍎 Download for iOS (Comming Soon)
-                </a>
-            </div>
-        </div>
-
-        <div class="content-card download-section">
-            <div style="padding: 20px;">
-                    <img src="images/AyoLogo512.png" alt="nchoGame1" width="100px" />
-            </div>
-            <h3>⬇️ Download Ayo2D</h3>
-            <p class="subtitle">Available on Android & iOS</p>
-            <p>Download Ayo2D for free and start playing today!</p>
-
-            <div class="download-buttons">
-                <a href="https://play.google.com/store/apps/details?id=com.Merike.Ayo"
-                    class="download-btn">
-                    📱 Download for Android
-                </a>
-                <a href="#" class="download-btn">
-                    🍎 Download for iOS (Comming Soon)
-                </a>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <h2>System Requirements</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>Android</h3>
-                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>Android 6.0 or higher</li>
-                        <li>1GB RAM minimum</li>
-                        <li>100MB free storage</li>
-                    </ul>
-                </div>
-                <div class="feature-item">
-                    <h3>iOS</h3>
-                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                        <li>iOS 12.0 or higher</li>
-                        <li>iPhone 6 or newer</li>
-                        <li>100MB free storage</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="game-card">
+      <div class="game-card-img">🧂</div>
+      <div class="game-card-body">
+        <h3>Spice Cabinet</h3>
+        <p>A brain-teasing puzzle — find the right spice in the cabinet.</p>
+        <span class="status-dot planning">Planning</span>
+      </div>
     </div>
 
-    <!-- Other Games Page -->
-    <div id="other-games" class="page">
-        <div class="hero">
-            <h1>🎮 More Games</h1>
-            <p class="subtitle">Explore our up coming projects</p>
-        </div>
+  </div>
 
-        <div class="games-grid">
-            <div class="game-card">
-                <div class="game-card-image"><img src="images/masqueR.png" alt="nchoGame3"
-                            width="400px" />
-                </div>
-                <div class="game-card-content">
-                    <h3>Masque Raiders</h3>
-                    <p>An action advanture game to vanquish the invading forces from evil in the village.</p>
-                    <span class="game-status">In Development</span>
-                </div>
-            </div>
-
-            <div class="game-card">
-                <div class="game-card-image">✈️</div>
-                <div class="game-card-content">
-                    <h3>The Vanquisher</h3>
-                    <p>A space game to eliminate enemy forces within the galaxy</p>
-                    <span class="game-status">Planning</span>
-                </div>
-            </div>
-             <div class="game-card">
-                <div class="game-card-image">🚚</div>
-                <div class="game-card-content">
-                    <h3>Gabage Truck</h3>
-                    <p>Clean and clear the streets from dirts</p>
-                    <span class="game-status">Planning</span>
-                </div>
-
-            </div>
-             <div class="game-card">
-                <div class="game-card-image">🧂 + 🗄️</div>
-                <div class="game-card-content">
-                    <h3>Spice Cabinet</h3>
-                    <p>Brain teasing puzzle to find the right spice within a Cabinet </p>
-                    <span class="game-status">Planning</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-card">
-            <h2>Stay Updated</h2>
-            <p>Follow us on social media to get updates on new games and features:</p>
-            <div class="social-links" style="justify-content: center; margin-top: 1rem;">
-                <a href="https://github.com/mcikenna" target="_blank">GitHub</a>
-                <a href="https://twitter.com/merike" target="_blank">Twitter</a>
-                <a href="https://instagram.com/merike" target="_blank">Instagram</a>
-                <a href="https://youtube.com/@merike" target="_blank">YouTube</a>
-            </div>
-        </div>
+  <div class="card">
+    <h2 class="section-title" style="font-size:1.1rem;text-align:center">Stay Updated</h2>
+    <p style="color:var(--muted);text-align:center;margin-bottom:4px">Follow us for news on new releases and updates.</p>
+    <div class="social-row">
+      <a class="pill" href="https://github.com/mcikenna"  target="_blank">GitHub</a>
+      <a class="pill" href="https://twitter.com/merike"   target="_blank">Twitter</a>
+      <a class="pill" href="https://instagram.com/merike" target="_blank">Instagram</a>
+      <a class="pill" href="https://youtube.com/@merike"  target="_blank">YouTube</a>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Merike Games. All rights reserved.</p>
-        <p>Developed by <a href="#home" onclick="showPage('home')">MERIKE LLC</a></p>
-        <p>
-            <a href="ncho-privacy">Privacy Policy</a> |
-            <a href="#">Terms of Service</a> |
-            <a href="mailto:meriktech@gmail.com">Contact</a>
-        </p>
-    </footer>
+</div>
 
-    <script>
-        // Page navigation
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<footer>
+  <p>&copy; 2026 Merike Games · All rights reserved.</p>
+  <p style="margin-top:4px">Developed by <a href="#home" onclick="showPage('home',event)">MERIKE LLC</a></p>
+  <p style="margin-top:12px">
+    <a href="masqueRaiders.html" target="_blank">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="#">Terms of Service</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:meriktech@gmail.com">Contact</a>
+  </p>
+</footer>
 
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
+<script>
+function showPage(pageId, e) {
+  if (e) e.preventDefault();
 
-            // Update nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+  const page = document.getElementById(pageId);
+  if (page) page.classList.add('active');
 
-        // Handle hash navigation
-        window.addEventListener('load', () => {
-            const hash = window.location.hash.slice(1);
-            if (hash && document.getElementById(hash)) {
-                showPage(hash);
-            }
-        });
+  const link = document.querySelector(`.nav-link[href="#${pageId}"]`);
+  if (link) link.classList.add('active');
 
-        // Update hash when navigating
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                const pageId = e.target.getAttribute('href').slice(1);
-                window.location.hash = pageId;
-            });
-        });
-    </script>
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.location.hash = pageId;
+}
+
+window.addEventListener('load', () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById(hash)) showPage(hash);
+});
+</script>
 </body>
-
 </html>
